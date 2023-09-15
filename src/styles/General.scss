@@ -1,95 +1,96 @@
 @import "@fortawesome/fontawesome-free/css/all.css";
-@import url("../styles/components/SideBar.scss");
 
 #root {
   width: 100%;
   height: 100vh;
 }
 
-
-
-.title {
-  margin: 0px;
-  font-size: x-large;
+.content-page {
+  background-color: #d9d9d9;
+  width: 100vw;
+  height: calc(100% - 60px);
+  text-align: center;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 6%;
+  padding-left: 270px;
 }
 
+.title {
+  margin: 20px;
+}
 .header-container {
-    height: 6%; 
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0px;
-    /* background-color: #f0f0f0; */
+    padding: 10px;
+    background-color: #f0f0f0;
     width: 100%;
-    margin: 0;
-}
+  }
   
-.back-button {
-  height: 3rem;
-  background: #153a6100;
-  border: solid 1px ;
-  color: #153a61;
-  border-radius: 50%;
-  width: 3rem;
-  margin: 0 3% 0 1%;
-  font-size: smaller;
-  padding: 0 0 0.1% 0.1%;
-}
+  .back-button {
+    height: 80px;
+    background: #153a61;
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 80px;
+    margin-right: 20px;
+  }
   
-.title-container {
-  flex: 1;
-  text-align: left;
-  color: #153a61;
-}
+  .title-container {
+    flex: 1; /* Take remaining space */
+    text-align: center;
+    
+    border-radius: 20px;
+    border: 1px solid #fff;
+    background: #153a61;
+    color: white;
+  }
 
 .button-container {
-  margin: 1% 0% 1% 1%;
+  margin: 10px;
   background: white;
-  padding: 0px;
-  // border-radius: 20px;
+  padding: 15px;
+  border-radius: 20px;
   align-items: center;
-  width: 98%;
-  height: 0px;
+  width: 100%;
+  height: 80px;
   justify-content: space-between;
-  // border: solid;
 }
 
 .menu-icon {
   background: none;
   border: none;
   color: #153a61;
-  margin: 1rem;
-  font-size: x-large;
+  margin-left: 10px;
 }
 
 .generic-button {
   background: none;
-  border:  solid rgb(224, 224, 224);
-  margin: 0 0 0 6%;
-  border-radius: 50%;
+  border: none;
 }
 
 .export-dropdown {
   select,
   label {
-    max-width: 36rem;
-    height: 3rem;
-    font-size: medium;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 40px;
+    font-size: 14px;
   }
 
-  margin: 0% 2% 0% 0px;
+  margin: 15px;
   display: flex;
   align-items: center;
+  margin-left: 25px;
+  border: 1px solid #153a61;
   border-radius: 10px;
-  height: 4rem;
-  padding: 0 1% 0 1%;
+  height: 60px;
+  padding: 10px;
   select {
-    margin-left: 5px;
-    padding: 0;
-    border: solid 1px #dfdfdf
+    margin-left: 10px;
   }
 }
 
@@ -102,6 +103,7 @@
 .generic-table {
   width: 100%;
   overflow-x: scroll;
+  overflow-y: scroll;
   border-collapse: collapse;
 }
 
@@ -155,26 +157,4 @@
 
 .charge-buttons{
   margin: 10px;
-}
-
-.laver-export´{
-  margin: 0% 2% 0% 0px;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
-    height: 49px;
-    padding: 0 1% 0 1%;
-}
-.text-export{
-  font-weight: bolder;
-  width: 13rem;
-}
-
-.search{
-  // background-color: red;
-  display: flex;
-  width: 30%;
-  justify-content: center;
-  align-items: center;
-  margin: 0 0% 0 0;
 }

@@ -14,6 +14,9 @@ const Pickup = () => {
   const [selectedPickupOrder, setSelectedPickupOrder] = useState(null);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
   const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [nextPageURL, setNextPageURL] = useState("");
+const [initialDataFetched, setInitialDataFetched] = useState(false);
+const [currentPickupNumber, setcurrentPickupNumber] = useState(0);
   const columns = [
     "Status",
     "Number",
@@ -21,45 +24,63 @@ const Pickup = () => {
     "Ship Date",
     "Delivery Date",
     "Pickup Name",
-    "Delivery Key",
+    "Pickup Address",
+    "Delivery Name",
+    "Delivery Address",
     "Pieces",
     "Pickup Orders",
-    "Pickup Key",
     "Weight",
     "Volume",
-    "Carrier",
-    "Main Carrier Key",
-    "Inland Carrier Key",
+    "Carrier Name",
+    "Carrier Address",
     "PRO Number",
     "Tracking Number",
-    "",
     "Invoice Number",
     "Purchase Order number"
   ];
 
-  const updatePickupOrders = () => {
-    PickupService.getPickups()
+  const updatePickupOrders = (url = null) => {
+    PickupService.getPickups(url)
       .then((response) => {
-        const modified = response.data.map((po) => {
-          // Check if the status is 1, if yes, set it to "loaded"
-          if (po.status === "1") {
-            po.status = "loaded";
-          }
-          // Return the modified object
-          return po;
+        setcurrentPickupNumber(response.data.results.slice(-1)[0].number || 0);
+        setpickupOrders((prevCustomers) => {
+          const newData = [...prevCustomers, ...response.data.results];
+          return newData;
         });
-        console.log(modified);
-        setpickupOrders(modified);
+
+        if (response.data.next) {
+          setNextPageURL(response.data.next);
+        }
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
       });
   };
-  
 
   useEffect(() => {
-    updatePickupOrders();
+    if(!initialDataFetched){
+      updatePickupOrders();
+      setInitialDataFetched(true);
+    }
   }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && nextPageURL) {
+        updatePickupOrders(nextPageURL);
+      }
+    });
+
+    const lastRow = document.querySelector(".table-row:last-child");
+    if (lastRow) {
+      observer.observe(lastRow);
+    }
+
+    return () => {
+      // Clean up the observer when the component unmounts
+      observer.disconnect();
+    };
+  }, [nextPageURL]);
 
   const handlePickupOrdersDataChange = () => {
     updatePickupOrders();
@@ -67,6 +88,7 @@ const Pickup = () => {
 
   const handleSelectPickupOrder = (PickupOrder) => {
     setSelectedPickupOrder(PickupOrder);
+    console.log("Selected PickupOrder", selectedPickupOrder);
   };
 
   const handleEditPickupOrders = () => {
@@ -83,7 +105,7 @@ const Pickup = () => {
 
   const handleDeletePickupOrder = () => {
     if (selectedPickupOrder) {
-        PickupService.deletePickupOrders(selectedPickupOrder.id)
+        PickupService.deletePickup(selectedPickupOrder.id)
         .then((response) => {
           if (response.status == 204) {
             setShowSuccessAlert(true);
@@ -171,6 +193,8 @@ const Pickup = () => {
               closeModal={closeModal}
               creating={false}
               onpickupOrderDataChange={handlePickupOrdersDataChange}
+              currentPickUpNumber={currentPickupNumber}
+              setcurrentPickUpNumber={setcurrentPickupNumber}
             />
           </ModalForm>
         )}
@@ -182,6 +206,8 @@ const Pickup = () => {
               closeModal={closeModal}
               creating={true}
               onpickupOrderDataChange={handlePickupOrdersDataChange}
+              currentPickUpNumber={currentPickupNumber}
+              setcurrentPickUpNumber={setcurrentPickupNumber}
             />
           </ModalForm>
         )}

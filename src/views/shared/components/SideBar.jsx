@@ -4,11 +4,6 @@ import { useModal } from "../../../hooks/useModal";
 import { Link } from "react-router-dom";
 import MyCompanyForm from "../../forms/MyCompanyForm";
 import ModalForm from "../components/ModalForm";
-
-import logo from "../../../img/logotex.png"
-import logotext from "../../../img/logorem.png"
-import usuario from "../../../img/usuario.png"
-
 const Sidebar = () => {
   const [close, setClose] = useState(false);
   useModal(false);
@@ -33,10 +28,8 @@ const Sidebar = () => {
     <>
       <div className={`sidebar ${close ? "close" : ""}`}>
         <div className="logo-details">
-          {/* <i className="bx bxl-c-plus-plus"></i> */}
-          <img className="logo_name" src={logo} alt="Logo" />
-          <img className="logo" src={logotext} alt="Logo_texto" />
-          {/* <span className="logo_name">Logo</span> */}
+          <i className="bx bxl-c-plus-plus"></i>
+          <span className="logo_name">Logo</span>
         </div>
         <ul className="nav-links">
           <li>
@@ -412,6 +405,19 @@ const Sidebar = () => {
             </ul>
           </li>
 
+          <li>
+            <div className="profile-details">
+              <div className="profile-content">
+                <img src="image/profile.jpg" alt="profile" />
+              </div>
+
+              <div className="name-job">
+                <div className="profile_name">Usuario</div>
+                <div className="job">Rol</div>
+              </div>
+              <i className="bx bx-log-out"></i>
+            </div>
+          </li>
         </ul>
       </div>
       <section className="home-section">
@@ -420,21 +426,7 @@ const Sidebar = () => {
             className="bx bx-menu menu__icon"
             onClick={handleDropdownClose}
           ></i>
-          <span className="text"> Xpress Logistic</span>
-
-          <div className="rith">
-          <div className="profile-user">
-              <div className="profile-content">
-                <img className="img-usuario" src={usuario} alt="usuario" />
-              </div>
-              <div className="name-job">
-                <div className="profile_user">Usuario</div>
-                <div className="job">Rol</div>
-              </div>
-              <i className="bx bx-log-out profile-bx"></i>
-            </div>
-          </div>
-          
+          <span className="text">Drop down sidebar</span>
         </div>
       </section>
     </>
